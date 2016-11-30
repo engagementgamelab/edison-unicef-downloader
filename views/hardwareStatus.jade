@@ -1,0 +1,10 @@
+extends layout
+
+block content
+    div.grid#hardwareStatus
+        include nav
+        div.whole.hardwareStatus
+            h1 Hardware status
+            p#battery battery voltage:
+            p#motion motion sensor:
+            p#storage storage usage:

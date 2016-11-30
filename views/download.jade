@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    div.grid
+        include nav
+        div.whole.align-center
+            p List of packages
+            ul
+                each val in packages
+                    li
+                        a(href=val)=val

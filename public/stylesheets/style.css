@@ -1,0 +1,64 @@
+body {
+    padding: 10px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    background: #FBF6F4;
+}
+
+a {
+    color: #00B7FF;
+}
+
+button.delete {
+    color: red;
+}
+
+pre {
+    background: #c1c1c1;
+}
+
+.whole {
+    background: #FBF6F4;
+    height: 100px;
+}
+
+#closeSession {
+    color: red;
+    width: 50%;
+    height: 50px;
+}
+
+.warning {
+    color: red;
+    font-weight: bold;
+}
+
+.button-action {
+    color: #353535;
+    padding: 10px 20px;
+    background-color: #c1c1c1;
+    border: 0;
+}
+
+#storage {
+    float: left;
+}
+
+#storage pre {
+    background: none;
+    font-weight: bold;
+}
+
+.hardwareStatus span.error {
+    color: red;
+}
+
+.hardwareStatus span.ok {
+    color: green;
+}
+
+.hardwareStatus span {
+    margin-left: 10px;
+    color: #000c64;
+    font-weight: bold;
+    font-size: 14px;
+}

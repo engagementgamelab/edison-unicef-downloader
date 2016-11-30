@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    div.grid
+        div.whole.align-center
+            p.moduleId Module ID:
+                span= moduleId
+            p.moduleTime Module clock:
+                span(data-unixtime=serverTime)
+                span.status In sync with your device
+        div.whole.align-center
+            a(href='/download').button-action Download data
+        div.whole.align-center
+            a(href='/status').button-action Hardware status
+        div.whole.align-center
+            a(href='/').button-action.terminal ADVANCED: SSH Terminal
+        div.whole.align-center
+            a#closeSession.button-action Close session
