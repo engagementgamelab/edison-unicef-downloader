@@ -1,3 +1,5 @@
+var _APP_TIMEOUT = 50000;
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -58,10 +60,26 @@ app.use(function (err, req, res, next) {
     });
 });
 
-
 app.set('port', (process.env.DOWNLOADER_PORT || process.env.PORT || 3000));
 
 app.listen(app.get('port'), function () {
     winston.info('Module configurator UI listening on port ' + app.get('port'));
     winston.info("config loaded: " + JSON.stringify(config));
 });
+
+// Shutdown app and access point after timeout
+setInterval(function() { 
+
+    exec("systemctl stop unicef-init", function (error, stdout, stderr) {
+
+        if (error)
+            console.log("Stopping AP and maintenance app didn't work:\n " + error + '\n' + stderr + "\n" + stdout);
+
+        else {
+            console.log("... AP mode OFF: " + stdout);
+            process.exit();
+        }
+
+    });
+
+}, _APP_TIMEOUT);
