@@ -6,6 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var exec = require('child_process').exec;
 
 var routes = require('./routes');
 var config = require('./config');
@@ -70,16 +71,27 @@ app.listen(app.get('port'), function () {
 // Shutdown app and access point after timeout
 setInterval(function() { 
 
-    exec("systemctl stop unicef-init", function (error, stdout, stderr) {
+    exec("/home/root/scripts/stopAp.sh", function (apError, stdout, stderr) {
+        
+        if(!apError) {
+            console.log("Stopped AP");
 
-        if (error)
-            console.log("Stopping AP and maintenance app didn't work:\n " + error + '\n' + stderr + "\n" + stdout);
+            exec("/home/root/scripts/stopWifi.sh", function (error, stdout, stderr) {
 
-        else {
-            console.log("... AP mode OFF: " + stdout);
-            process.exit();
+                if (error)
+                    console.log("Stopping AP and maintenance app didn't work:\n " + error + '\n' + stderr + "\n" + stdout);
+
+                else {
+                    console.log("... Wifi mode OFF: " + stdout);
+                    process.exit();
+                }
+
+            })
         }
-
+        else 
+            console.log(apError)
+        
     });
 
 }, _APP_TIMEOUT);
+console.log("app will end after " + _APP_TIMEOUT/1000 + " seconds")
