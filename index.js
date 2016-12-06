@@ -68,7 +68,7 @@ app.listen(app.get('port'), function () {
     winston.info("config loaded: " + JSON.stringify(config));
 });
 
- Shutdown app and access point after timeout
+// Shutdown app and access point after timeout
 setInterval(function() { 
 
     exec("/home/root/scripts/stopAp.sh", function (apError, stdout, stderr) {
