@@ -74,24 +74,22 @@ setInterval(function() {
     exec("/home/root/scripts/stopAp.sh", function (apError, stdout, stderr) {
         
         if(!apError) {
-            console.log("Stopped AP");
 
             exec("/home/root/scripts/stopWifi.sh", function (error, stdout, stderr) {
 
                 if (error)
-                    console.log("Stopping AP and maintenance app didn't work:\n " + error + '\n' + stderr + "\n" + stdout);
+                    winston.error("Stopping AP and maintenance app didn't work:\n " + error + '\n' + stderr + "\n" + stdout);
 
-                else {
-                    console.log("... Wifi mode OFF: " + stdout);
+                else
                     process.exit();
-                }
 
-            })
+            });
+            
         }
         else 
-            console.log(apError)
+            winston.error(apError)
         
     });
 
 }, _APP_TIMEOUT);
-console.log("app will end after " + _APP_TIMEOUT/1000 + " seconds")
+winston.info("app will end after " + _APP_TIMEOUT/1000 + " seconds")
