@@ -1,6 +1,7 @@
 $(function () {
     $.ajaxSetup({timeout: 5000});
     console.log("Module configurator");
+    var _APP_TIMEOUT = 300000;
     var serverTimestamp = $("p.moduleTime span").data("unixtime");
     var localTime = new Date().getTime();
 
@@ -11,9 +12,20 @@ $(function () {
     var largeTimeDifference = Math.abs(serverTimestamp - localTime) > (10 * 60 * 1000);
     if (largeTimeDifference) {
         if (confirm("module time does not match your local time. Do you want to update module time? New time will be " + new Date())) {
+
             $.get("/syncTime", {"newTime": Math.ceil(new Date().getTime() / 1000)},
+
                 function (response) {
-                    alert(response);
+
+                    // alert(response);
+
+                    $.get("/execute", {command: "systemctl enable unicef-monitor & systemctl start unicef-monitor"},
+                    function (execResponse) {
+                        alert('Time syned and app started.');
+                    })
+                    .fail(function (data) {
+                        $('#msg').append("<span class='error'>" + data.responseText + "</span>");
+                    });
                 })
                 .fail(function (data) {
                     alert("error: " + data.responseText);
@@ -78,5 +90,11 @@ $(function () {
         getStatusFromMonitoringApp("motion", "#motion");
         getStatusFromMonitoringApp("touch", "#touch");
     }
+
+    setInterval(function() {
+        _APP_TIMEOUT--;
+        console.log((_APP_TIMEOUT/1000/60 << 0) + ":" + (_APP_TIMEOUT/1000 % 60));
+        $('#timeLeft').text("Time before app and wifi mode shuts down" + (_APP_TIMEOUT/1000/60 << 0) + ":" + (_APP_TIMEOUT/1000 % 60));
+    }, 1000);
 })
 ;

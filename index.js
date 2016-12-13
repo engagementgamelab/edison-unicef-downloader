@@ -66,6 +66,7 @@ app.set('port', (process.env.DOWNLOADER_PORT || process.env.PORT || 3000));
 app.listen(app.get('port'), function () {
     winston.info('Module configurator UI listening on port ' + app.get('port'));
     winston.info("config loaded: " + JSON.stringify(config));
+
 });
 
 // Shutdown app and access point after timeout
