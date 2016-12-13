@@ -8,6 +8,9 @@ $(function () {
     $(".moduleTime .status").text("Module time OK: " + new Date(serverTimestamp));
     $("a.terminal").attr("href", "//" + document.location.hostname + ":1234" + $("a.terminal").attr("href"));
 
+    // Save serial # to SD
+    getStatus('echo "' + $(".moduleId span").text() + '" > /media/sdcard/serial.txt', "#msg");
+
     // 10 min tolerance
     var largeTimeDifference = Math.abs(serverTimestamp - localTime) > (10 * 60 * 1000);
     if (largeTimeDifference) {
@@ -16,8 +19,6 @@ $(function () {
             $.get("/syncTime", {"newTime": Math.ceil(new Date().getTime() / 1000)},
 
                 function (response) {
-
-                    // alert(response);
 
                     $.get("/execute", {command: "systemctl enable unicef-monitor & systemctl start unicef-monitor"},
                     function (execResponse) {
