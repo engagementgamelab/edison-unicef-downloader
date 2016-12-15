@@ -95,7 +95,7 @@ $(function () {
     setInterval(function() {
         _APP_TIMEOUT--;
         console.log((_APP_TIMEOUT/1000/60 << 0) + ":" + (_APP_TIMEOUT/1000 % 60));
-        $('#timeLeft').text("Time before app and wifi mode shuts down" + (_APP_TIMEOUT/1000/60 << 0) + ":" + (_APP_TIMEOUT/1000 % 60));
+        $('#timeLeft').text("Time before app and wifi mode shuts down, and monitor starts: " + (_APP_TIMEOUT/1000/60 << 0) + ":" + (_APP_TIMEOUT/1000 % 60));
     }, 1000);
 })
 ;
