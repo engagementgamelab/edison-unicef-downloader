@@ -94,7 +94,8 @@ $(function () {
 
     setInterval(function() {
         _APP_TIMEOUT--;
-        $('.timeLeft').text("Time before this interface shuts down, and monitor starts: " + Math.floor(_APP_TIMEOUT/60) + ":" + (_APP_TIMEOUT/1000 % 60));
+        var seconds = Math.ceil((_APP_TIMEOUT % (60 * 60)) % 60);
+        $('.timeLeft').text("Time before this interface shuts down, and monitor starts: " + Math.floor(_APP_TIMEOUT/60) + ":" + seconds);
     }, 1000);
 })
 ;
