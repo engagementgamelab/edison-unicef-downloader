@@ -8,6 +8,8 @@ block content
             p.moduleTime Module clock:
                 span(data-unixtime=serverTime)
                 span.status In sync with your device
+            p.timeLeft Time left:
+                span= timeLeft
         div.whole.align-center
             a(href='/download').button-action Download data
         div.whole.align-center
@@ -17,6 +19,4 @@ block content
         div.whole.align-center
             a#closeSession.button-action Close session
         div.whole.align-center
-            p.timeLeft Time left:
-                span= timeLeft
             p#msg Device messages:
