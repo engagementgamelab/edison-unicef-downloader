@@ -1,7 +1,7 @@
 $(function () {
     $.ajaxSetup({timeout: 5000});
     console.log("Module configurator");
-    var _APP_TIMEOUT = 300000;
+    var _APP_TIMEOUT = 300;
     var serverTimestamp = $("p.moduleTime span").data("unixtime");
     var localTime = new Date().getTime();
 
@@ -94,8 +94,7 @@ $(function () {
 
     setInterval(function() {
         _APP_TIMEOUT--;
-        console.log((_APP_TIMEOUT/1000/60 << 0) + ":" + (_APP_TIMEOUT/1000 % 60));
-        $('.timeLeft').text("Time before app and wifi mode shuts down, and monitor starts: " + (_APP_TIMEOUT/1000/60 << 0) + ":" + (_APP_TIMEOUT/1000 % 60));
+        $('.timeLeft').text("Time before this interface shuts down, and monitor starts: " + Math.floor(_APP_TIMEOUT/60) + ":" + (_APP_TIMEOUT/1000 % 60));
     }, 1000);
 })
 ;
