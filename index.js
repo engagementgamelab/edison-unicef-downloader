@@ -1,4 +1,4 @@
-var _APP_TIMEOUT = 480000;
+var _APP_TIMEOUT = 600000;
 
 var express = require('express');
 var path = require('path');
