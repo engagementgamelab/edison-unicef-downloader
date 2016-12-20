@@ -1,7 +1,7 @@
 $(function () {
     $.ajaxSetup({timeout: 5000});
     console.log("Module configurator");
-    var _APP_TIMEOUT = 300;
+    var _APP_TIMEOUT = 480;
     var serverTimestamp = $("p.moduleTime span").data("unixtime");
     var localTime = new Date().getTime();
 
@@ -88,8 +88,6 @@ $(function () {
         getStatus("battery-voltage", "#battery");
         getStatus("ls /dev/video0", "#camera");
         getStatus("df -h /media/sdcard/", "#storage", true);
-        getStatusFromMonitoringApp("motion", "#motion");
-        getStatusFromMonitoringApp("touch", "#touch");
     }
 
     setInterval(function() {

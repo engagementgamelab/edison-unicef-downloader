@@ -5,6 +5,11 @@ var ce = require('./commandExecutor');
 var config = require('./config');
 var winston = require('./log.js');
 
+var mraa = require('mraa'); // important note: MRAA is instable and is the cause of 90% of crashes, there be dragons.
+var IMUClass = require('jsupm_lsm9ds0');  // Instantiate an LSM9DS0 using default parameters (bus 1, gyro addr 6b, xm addr 1d)
+
+var gyroAccelCompass = new IMUClass.LSM9DS0();
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     winston.info("Rendering downloader main page");
@@ -96,13 +101,25 @@ router.get('/execute', function (req, res, next) {
 
 /* GET hardwareStatus. */
 router.get('/status', function (req, res, next) {
+
+    var sensorsOverallStatus = "OK";
+
+    if (gyroAccelCompass.readReg(IMUClass.LSM9DS0.DEV_GYRO, IMUClass.LSM9DS0.REG_WHO_AM_I_G) === 255) {
+        errorStatus += " Gyroscope unreachable. "; // if chip failed return false all the time
+        sensorsOverallStatus += " Gyroscope FAIL ";
+    }
+    if (gyroAccelCompass.readReg(IMUClass.LSM9DS0.DEV_XM, IMUClass.LSM9DS0.REG_WHO_AM_I_XM) === 255) {
+        errorStatus += " Accelerometer unreachable. "; // if chip failed return false all the time
+        sensorsOverallStatus += " Accelerometer FAIL ";
+    }
+
     winston.info("hardware status page");
     res.render('hardwareStatus', {
         title: 'UNICEF monitoring station - hardwareStatus',
         camera: "N/A",
         voltage: "N/A",
         storage: "N/A",
-        motion: "N/A",
+        motion: sensorsOverallStatus,
         touch: "N/A"
     });
 });
